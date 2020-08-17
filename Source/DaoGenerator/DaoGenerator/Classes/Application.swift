@@ -45,7 +45,7 @@ class Application {
             return 0
         }
 
-        let projectName: String = valueForArgument(argument: "-project_name", defaultValue: "AlpinaDigital")
+        let projectName: String = valueForArgument(argument: "-project_name", defaultValue: "Redmadrobot")
         let inputFilesFolder: String = valueForArgument(argument: "-input", defaultValue: ".")
         let outputModelFolder: String = valueForArgument(argument: "-output_model", defaultValue: ".")
         let outputTranslatorFolder: String = valueForArgument(argument: "-output_translator", defaultValue: ".")
