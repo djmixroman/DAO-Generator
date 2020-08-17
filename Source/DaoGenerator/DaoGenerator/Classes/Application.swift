@@ -111,7 +111,7 @@ private extension Application {
 
     
     func valueForArgument(argument: String, defaultValue: String) -> String {
-        guard let index: Int = arguments.index(of: argument)
+        guard let index: Int = arguments.firstIndex(of: argument)
         else {
             return defaultValue
         }
@@ -143,7 +143,7 @@ private extension Application {
     }
 
     func readKlasses(filePathList paths: [String], debugMode: Bool) -> [Klass] {
-        return paths.flatMap({ (filePath: String) -> Klass? in
+        return paths.compactMap({ (filePath: String) -> Klass? in
                     let filename: String = filePath.truncateUntilWord("/")
 
                     if debugMode {
@@ -215,7 +215,7 @@ private extension Application {
             projectName: String,
             debugMode: Bool) -> Int {
         let implementations: [Implementation] = klasses
-                .flatMap { (k: Klass) -> Implementation? in
+                .compactMap { (k: Klass) -> Implementation? in
             do {
                 return Implementation(
                         filePath: "DB\(k.name).swift",
@@ -247,7 +247,7 @@ private extension Application {
             projectName: String,
             debugMode: Bool) -> Int {
         let implementations: [Implementation] = klasses
-                .flatMap { (k: Klass) -> Implementation? in
+                .compactMap { (k: Klass) -> Implementation? in
             do {
                 return Implementation(
                         filePath: k.name + "DAOTranslator.swift",

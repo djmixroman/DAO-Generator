@@ -16,7 +16,7 @@ public extension String {
      
      - returns: String appended with empty line.
      */
-    public func addBlankLine() -> String {
+    func addBlankLine() -> String {
         return addLine("")
     }
     
@@ -27,7 +27,7 @@ public extension String {
      
      - returns: String appended with **line** (with \n at the end).
      */
-    public func addLine(_ line: String) -> String {
+    func addLine(_ line: String) -> String {
         let straightLine: String = line.replacingOccurrences(of: "\n", with: "")
         
         return self + straightLine + "\n"
@@ -36,21 +36,21 @@ public extension String {
     /**
      Convenient wrapper for + operator.
      */
-    public func append(_ line: String) -> String {
+    func append(_ line: String) -> String {
         return self + line
     }
     
     /**
      Divide string into separate lines by \n
      */
-    public func lines() -> [String] {
+    func lines() -> [String] {
         return self.components(separatedBy: "\n")
     }
     
     /**
      Indent all lines with ```tabCount``` number of tabs (tab is four spaces).
      */
-    public func indent(tabCount: Int = 1) -> String {
+    func indent(tabCount: Int = 1) -> String {
         var tab: String = ""
         for _ in 0..<tabCount {
             tab += "    "
@@ -61,7 +61,7 @@ public extension String {
     /**
      Indent all lines with ```prefix```.
      */
-    public func indent(prefix: String) -> String {
+    func indent(prefix: String) -> String {
         return
             lines()
             .map { (line: String) -> String in

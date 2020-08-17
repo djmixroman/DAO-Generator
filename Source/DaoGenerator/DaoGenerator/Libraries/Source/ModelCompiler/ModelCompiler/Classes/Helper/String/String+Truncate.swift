@@ -21,13 +21,13 @@ public extension String {
      - returns: Возвращает строку, обрезанную вплоть до слова **word**. Если слова в
      строке нет -- возвращается сама строка.
      */
-    public func truncateAllBeforeWord(_ word: String, deleteWord: Bool = false) -> String {
+    func truncateAllBeforeWord(_ word: String, deleteWord: Bool = false) -> String {
         guard let wordRange: Range<String.Index> = range(of: word)
         else {
             return self
         }
         
-        return deleteWord ? substring(from: wordRange.upperBound) : substring(from: wordRange.lowerBound)
+        return deleteWord ? String(self[wordRange.upperBound...]) : String(self[wordRange.lowerBound...])
     }
     
     /**
@@ -40,13 +40,13 @@ public extension String {
      - returns: Возвращает строку, обрезанную после слова **word**. Если слова в строке нет
      -- возвращает саму строку.
      */
-    public func truncateFromWord(_ word: String, deleteWord: Bool = true) -> String {
+    func truncateFromWord(_ word: String, deleteWord: Bool = true) -> String {
         guard let wordRange: Range<String.Index> = range(of: word)
         else {
             return self
         }
         
-        return deleteWord ? substring(to: wordRange.lowerBound) : substring(to: wordRange.upperBound)
+        return deleteWord ? String(self[..<wordRange.lowerBound]) : String(self[..<wordRange.upperBound])
     }
     
     /**
@@ -55,7 +55,7 @@ public extension String {
      
      - returns: Возвращает последнее слово из строки.
      */
-    public func lastWord() -> String {
+    func lastWord() -> String {
         if contains(" ") {
             return truncateAllBeforeWord(" ", deleteWord: true).lastWord()
         }
@@ -73,7 +73,7 @@ public extension String {
      
      - returns: Возвращает первое слово из строки.
      */
-    public func firstWord(
+    func firstWord(
         sentenceDividers: [String] = ["\n", " ", ".", ",", ";", ":"]
     ) -> String {
         for divider in sentenceDividers {
@@ -85,7 +85,7 @@ public extension String {
         return self
     }
     
-    public func enumerateWords(_ enumerator: @escaping (_ word: String) -> ()) {
+    func enumerateWords(_ enumerator: @escaping (_ word: String) -> ()) {
         self.enumerateLines { (line: String, stop: inout Bool) in
             var mutableLine: String = line.trimmingCharacters(in: CharacterSet.whitespaces)
             
@@ -111,32 +111,32 @@ public extension String {
      
      - returns: Возвращает строку без пробелов и переносов в начале.
      */
-    public func truncateLeadingWhitespace() -> String {
+    func truncateLeadingWhitespace() -> String {
         if hasPrefix(" ") {
-            return substring(from: characters.index(startIndex, offsetBy: 1)).truncateLeadingWhitespace()
+            return String(self[index(startIndex, offsetBy: 1)...]).truncateLeadingWhitespace()
         }
         
         if hasPrefix("\n") {
-            return substring(from: characters.index(startIndex, offsetBy: 1)).truncateLeadingWhitespace()
+            return String(self[index(startIndex, offsetBy: 1)...]).truncateLeadingWhitespace()
         }
         
         return self
     }
     
-    public func truncateToWordFromBehind(_ word: String, deleteWord: Bool = true) -> String {
-        let drow: String = String(word.characters.reversed())
-        let fles: String = String(self.characters.reversed())
+    func truncateToWordFromBehind(_ word: String, deleteWord: Bool = true) -> String {
+        let drow: String = String(word.reversed())
+        let fles: String = String(self.reversed())
         
         let cut: String = fles.truncateAllBeforeWord(drow, deleteWord: deleteWord)
-        return String(cut.characters.reversed())
+        return String(cut.reversed())
     }
     
-    public func truncateUntilWord(_ word: String) -> String {
-        let drow: String = String(word.characters.reversed())
-        let fles: String = String(self.characters.reversed())
+    func truncateUntilWord(_ word: String) -> String {
+        let drow: String = String(word.reversed())
+        let fles: String = String(self.reversed())
         
         let cut: String = fles.truncateFromWord(drow, deleteWord: false)
-        return String(cut.characters.reversed())
+        return String(cut.reversed())
     }
     
 }
